@@ -1,0 +1,5 @@
+﻿  Test.cpp
+e:\demo\data-structure\hw11\test\test.cpp(20): error C2086: “time_t t”: 重定义
+  e:\demo\data-structure\hw11\test\test.cpp(18): note: 参见“t”的声明
+e:\demo\data-structure\hw11\test\test.cpp(21): error C3861: “init_genrand”: 找不到标识符
+e:\demo\data-structure\hw11\test\test.cpp(28): error C3861: “genrand_int32”: 找不到标识符

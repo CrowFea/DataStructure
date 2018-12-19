@@ -1,0 +1,7 @@
+﻿  6-4.cpp
+e:\demo\data-structure\hw6\6-4\6-4.cpp(84): warning C4305: “return”: 从“int”到“Status”截断
+e:\demo\data-structure\hw6\6-4\6-4.cpp(84): warning C4309: “return”: 截断常量值
+e:\demo\data-structure\hw6\6-4\6-4.cpp(95): warning C4305: “return”: 从“int”到“Status”截断
+e:\demo\data-structure\hw6\6-4\6-4.cpp(95): warning C4309: “return”: 截断常量值
+e:\demo\data-structure\hw6\6-4\6-4.cpp(208): error C2228: “.substr”的左边必须有类/结构/联合
+  e:\demo\data-structure\hw6\6-4\6-4.cpp(208): note: 类型是“char [1000000]”

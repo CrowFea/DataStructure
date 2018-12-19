@@ -1,0 +1,3 @@
+﻿  test.cpp
+e:\demo\data-structure\hw10\test\test.cpp(41): warning C4715: “Graphmtx::getVertexPos”: 不是所有的控件路径都返回值
+  Test.vcxproj -> E:\demo\Data-structure\hw10\Debug\Test.exe
