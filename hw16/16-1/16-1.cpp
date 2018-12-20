@@ -1,26 +1,21 @@
 #include <iostream>
+#include<Windows.h>
 using namespace std;
 
 //直接插入排序
-void straightInsertSort(int[] arr, int len)
+void straightInsertSort(int arr[], int len)
 {
-    int high = 0;
-    int i = 0, j = 0, inValue = 0;
-    while (high < len - 1)
-    {
-        i = high;
-        inValue = arr[i];
-        while (i >= 0 && inValue > arr[i])
-        {
-            i--;
-        }
-        for (j = high; j >= i; j--)
-        {
-            arr[j + 1] = arr[j];
-        }
-        arr[i + 1] = inValue;
-        high++;
-    }
+	int i = 0, temp = -1;
+	int index = 0;
+	for (i = 1; i < len; i++) {
+		temp = arr[i];
+		index = i - 1;
+		while (index >= 0 && arr[index] > temp) {
+			arr[index + 1] = arr[index];
+			index--;
+		}
+		arr[index + 1] = temp;
+	}
 }
 
 //折半插入排序
@@ -40,10 +35,11 @@ void binary_insertion_sort(int arr[], int len)
                 low = m + 1;
             }
         }
+		for (j = i - 1; j >= high + 1; j--)
+			arr[j + 1] = arr[j];
+		arr[j + 1] = temp;
     }
-    for (j = i - 1; j >= high + 1; j--)
-        arr[j + 1] = arr[j];
-    arr[j + 1] = temp;
+    
 }
 
 //希尔排序
@@ -106,56 +102,52 @@ void quick_sort_recursive(int arr[], int start, int end) {
 //选择排序
 void selectSort(int arr[], int len)
 {
-    int i, j, temp = 0;
-    for (i = 0; i < len - 1; i++){
-        for (j = i; j < len - 1; j++){
-            if (arr[j] > arr[j + 1]){
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
+	for (int i = 0; i < len - 1; ++i)
+		{
+	 int index = i;
+	        for (int j = i + 1; j < len; ++j)
+			         {
+			            if (arr[j] < arr[index])
+				                 index = j;
+			        }
+		        if (index != i)
+			        {
+			             int temp = arr[i];
+			            arr[i] = arr[index];
+			             arr[index] = temp;
+			       }
+		    }
 }
 
 //归并排序
 
 void Merge(int a[],int left,int mid,int right)
 {
-	//两段区间的长度
 	int length1 = mid-left+1;
 	int length2 = right-mid;
- 
-	//分配两段新的内存空间存储原内容
+	int i, j;
 	int *l1 = new int[length1];
 	int *l2 = new int[length2];
  
-	for (int i = 0; i < length1; ++i)
-	{
+	for (i = 0; i < length1; ++i){
 		l1[i] = a[left+i];
 	}
-	for (int j = 0; j < length2; ++j)
-	{
+	for (j = 0; j < length2; ++j){
 		l2[j] = a[j+mid+1];
 	}
  
-	//存入原内容之后，比较两个序列
-	int i = 0,j = 0;
+	i = 0;
+	j = 0;
 	int k = length1;
-	//比较两个序列的重合部分，进行排序
-	while (i<length1 && j<length2)
-	{
-		if (l1[i] < l2[j])
-		{
+
+	while (i<length1 && j<length2){
+		if (l1[i] < l2[j]){
 			a[left++] = l1[i++];
 		}
-		else
-		{
+		else{
 			a[left++] = l2[j++];
-			//因为l2[j]大于l1[i],所以l2[j]肯定大于[0,length-1]之中[0,i]之间的所有数，产生逆序对
-			if (l2[j] > l1[i])
-			{
-				_count +=  length1-i+1;
+			if (l2[j] > l1[i]){
+				//_count +=  length1-i+1;
 			}		
 		}
 	}
@@ -201,7 +193,7 @@ void Heap_build(int a[],int root,int length)
 		if (a[root] < a[flag])
 		{
 			//交换父结点和比父结点大的最大子节点
-			Swap(a[root],a[flag]);
+			swap(a,root,flag);
 			//从此次最大子节点的那个位置开始递归建堆
 			Heap_build(a,flag,length);
 		}
@@ -217,7 +209,7 @@ void Heap_sort(int a[],int len)
  
 	for (int j = len-1; j > 0; --j)//j表示数组此时的长度，因为len长度已经建过了，从len-1开始
 	{
-		Swap(a[0],a[j]);//交换首尾元素,将最大值交换到数组的最后位置保存
+		swap(a,0,j);//交换首尾元素,将最大值交换到数组的最后位置保存
 		Heap_build(a,0,j);//去除最后位置的元素重新建堆，此处j表示数组的长度，最后一个位置下标变为len-2
 	}
 }
@@ -225,7 +217,7 @@ void Heap_sort(int a[],int len)
 void print(int arr[],int len)
 {
     int i;
-    for(i=0;i<n;i++){
+    for(i=0;i<len;i++){
         cout<<arr[i]<<" ";
     }
     cout<<endl;
@@ -234,16 +226,28 @@ void print(int arr[],int len)
 
 int main()
 {
-    int n;
+	DWORD start_time = GetTickCount();
+
+    int n,i;
     cin >> n;
     int *arr = new int[n];
-    straightInsertSort(arr,n);
-    halfIntervalSearch(arr,n);
-    bubble_sort1(arr,n);
-    quick_sort_recursive(arr,0,n-1);
-    selectSort(arr,n);
-    Merge_sort(arr,0,n-1);
-    Heap_sort(arr,n);
+	for (i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	//print(arr, n);
+    //straightInsertSort(arr,n);   //10
+	//binary_insertion_sort(arr,n);  //12
+	//shellSort(arr, n);             //15
+    //bubble_sort1(arr,n);             //8
+    //quick_sort_recursive(arr,0,n-1);   //11
+    //selectSort(arr,n);               //8
+    //Merge_sort(arr,0,n-1);         //15
+    Heap_sort(arr,n);			     //15
     print(arr,n);
+
+	DWORD end_time = GetTickCount();
+	cout << "The run time is:" << (end_time - start_time) << "ms!" << endl;
+
+
     return 0;
 }
